@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import {Route,Routes } from 'react-router-dom';
+import { useMemo } from 'react';
+
+import Navebar from './components/Navebar.jsx';
+import Home from './components/Home.jsx';
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx';
+
+import useToken from './components/useToken.js';
+import { TokenContext } from './TokenContext';
+
 
 function App() {
+  const { token, removeToken, setToken } = useToken();
+
+  const value = useMemo(() => ({ token, setToken, removeToken }), [token, setToken, removeToken]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TokenContext.Provider value={value}>
+    <Navebar />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+
+    </Routes>
+  </TokenContext.Provider>
   );
 }
 
