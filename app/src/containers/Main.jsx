@@ -16,15 +16,15 @@ const MainComponent = () => {
   };
 
   return (
-    <Container>
+    <Container className='ms-0'>
       <Row>
         {/* Columna para el formulario */}
-        <Col sm={10} md={4}>
+        <Col sm={12} md={5}> {/* Ajusta esto para darle más espacio al formulario */}
           <NoteForm onFormSubmit={handleFormSubmit} />
         </Col>
   
         {/* Columna para las notas */}
-        <Col className="sm-auto md-auto">
+        <Col sm={12} md={5}> {/* Ajusta esto para ocupar el espacio restante */}
           {notes.map((note, index) => (
             <NoteComponent key={index} note={note} />
           ))}

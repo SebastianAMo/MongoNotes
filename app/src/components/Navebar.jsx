@@ -2,11 +2,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import {Navbar, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import icono from "../assets/nav_icono.webp"
+
 function Navebar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary mb-5" style={{ borderBottom: '3px solid #4B4B4B' }}> {/* Estilo en línea para el color del borde */}
       <Container>
-        <Navbar.Brand href="">MongoNotes</Navbar.Brand>
+        <Navbar.Brand href="">
+          
+        <img  src={icono} alt="Icono" className="rounded-circle" style={{width: "50px", height: "50px"}} />
+            {' '}
+            MongoNotes
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
