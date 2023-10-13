@@ -9,10 +9,9 @@ function Navebar() {
     <Navbar expand="lg" className="bg-body-tertiary mb-5" style={{ borderBottom: '3px solid #4B4B4B' }}> {/* Estilo en línea para el color del borde */}
       <Container>
         <Navbar.Brand href="">
-          
         <img  src={icono} alt="Icono" className="rounded-circle" style={{width: "50px", height: "50px"}} />
             {' '}
-            MongoNotes
+            <Link to={""} className='text-black text-decoration-none'>MongoNotes</Link>    
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
