@@ -44,7 +44,7 @@ function Login() {
         },
       })
         .then((response) => {
-          setToken(response.data.access_token);
+          setToken(response.data);
           navigate('/main'); // Redirige al usuario a la página de perfil
         })
         .catch((error) => {
@@ -66,7 +66,7 @@ function Login() {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Usuario</Form.Label>
             <Form.Control
-              type="email"
+              type="text"
               placeholder="Ingresa tu Usuario"
               value={email}
               onChange={handleEmailChange}
