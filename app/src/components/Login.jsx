@@ -5,7 +5,7 @@ import { TokenContext } from '../TokenContext';
 import axios from 'axios';
 
 function Login() {
-  const [email, setEmail] = useState('');
+  const [user, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -26,7 +26,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (email === '') {
+    if (user === '') {
       setEmailError('El campo de Usuario es obligatorio');
     }
     if (password === '') {
@@ -34,21 +34,24 @@ function Login() {
     }
 
     // Aquí puedes realizar la lógica de autenticación si todos los campos son válidos
-    if (email !== '' && password !== '') {
+    if (user !== '' && password !== '') {
+      console.log('Usuario: ' + user + ' Contraseña: ' + password);
       axios({
         method: 'POST',
         url: 'http://localhost:5000/token',
         data: {
-          email: email,
-          password: password,
+          usuario: user,
+          contraseña: password,
         },
       })
         .then((response) => {
           setToken(response.data);
           navigate('/main'); // Redirige al usuario a la página de perfil
+          console.log(response.data);
         })
         .catch((error) => {
           if (error.response) {
+
             console.log(error.response);
             console.log(error.response.status);
             console.log(error.response.headers);
@@ -68,7 +71,7 @@ function Login() {
             <Form.Control
               type="text"
               placeholder="Ingresa tu Usuario"
-              value={email}
+              value={user}
               onChange={handleEmailChange}
               isInvalid={emailError !== ''}
             />
