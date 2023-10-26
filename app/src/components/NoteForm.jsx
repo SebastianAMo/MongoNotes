@@ -3,31 +3,54 @@ import { Form, Button, Col, Row } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { TokenContext } from '../TokenContext';
+import { useContext } from 'react';
 
 const NoteForm = () => {
-  const [validated, setValidated] = useState(false);
 
+  const { token } = useContext(TokenContext);
+  
+
+
+  const [validated, setValidated] = useState(false);
+  
   const schema = yup.object().shape({
     titulo: yup.string().required('Campo obligatorio'),
     nota: yup.string().required('Campo obligatorio'),
   });
 
+  
   const formik = useFormik({
     initialValues: {
+      usuarioid: '',
       titulo: '',
       fecha: new Date().toISOString().slice(0, 10), // Fecha actual en formato 'YYYY-MM-DD'
       nota: '',
     },
     validationSchema: schema,
     onSubmit: (values) => {
+      const useridString = JSON.stringify(token.user_id) || "ds";
+      const useridWithoutQuotes = useridString.replace(/"/g, '');
+      const tokenString = JSON.stringify(token.access_token) || "ds";
+      const tokenWithoutQuotes = tokenString.replace(/"/g, '');
+
+
       axios({
         method: 'POST',
-        url: 'http://localhost:5000/notes', // Ajusta la URL de registro según tu API
-        data: values,
+        url: 'http://localhost:5000/add_note', // Ajusta la URL de registro según tu API
+        data: {
+          usuarioid: useridWithoutQuotes,
+          titulo: values.titulo,
+          nota: values.nota,
+          fecha: values.fecha,
+
+        },
+        headers: {
+          Authorization: "Bearer " + tokenWithoutQuotes,
+      },
       })
         .then((response) => {
-          console.log(response.data);
-          // Realiza acciones adicionales después del registro exitoso
+          formik.resetForm();
         })
         .catch((error) => {
           console.error(error);
