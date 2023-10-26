@@ -39,7 +39,7 @@ except Exception as e:
     print(e)
 
 #CONFIGURATIONS LOGIN
-app.config["JWT_SECRET_KEY"] = "test"
+app.config["JWT_SECRET_KEY"] = "tes2"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=50)
 jwt = JWTManager(app)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -74,7 +74,7 @@ def create_token():
     if user:
         # Si las credenciales son válidas, generar y devolver un token JWT y el id del usuario
         access_token = create_access_token(identity=str(user['_id']))
-        response = {"access_token": access_token, "user_id": str(user['_id'])}
+        response = {"access_token": access_token, "user_id": str(user['_id']),"nombre": user['nombre']}
         return response
     else:
         return {"msg": "Credenciales incorrectas"}, 401
@@ -114,6 +114,7 @@ def register():
 @jwt_required()
 def add_note():
     data = request.get_json()
+    print(data)
     required_fields = ['usuarioid', 'titulo', 'fecha', 'nota']
     if not all(field in data for field in required_fields):
         return jsonify(message="Campos requeridos faltantes"), 400

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../TokenContext';
 import axios from 'axios';
 
+
 function Login() {
   const [user, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +36,7 @@ function Login() {
 
     // Aquí puedes realizar la lógica de autenticación si todos los campos son válidos
     if (user !== '' && password !== '') {
-      console.log('Usuario: ' + user + ' Contraseña: ' + password);
+
       axios({
         method: 'POST',
         url: 'http://localhost:5000/token',

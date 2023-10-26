@@ -31,8 +31,8 @@ const Register = () => {
     onSubmit: (values) => {
       axios({
         method: 'POST',
-        url: 'http://localhost:5000/registration', // Ajusta la URL de registro según tu API
-        data: values,
+        url: 'http://localhost:5000/register', // Ajusta la URL de registro según tu API
+        data: { nombre: values.name, cedula: values.cc, Telefono: values.telefono, direccion: values.direccion, ocupacion: values.ocupacion, usuario: values.usuario, contraseña: values.password }
       })
         .then((response) => {
           console.log(response.data);
