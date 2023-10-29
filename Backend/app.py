@@ -1,27 +1,33 @@
 import json
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-import logging
-from pymongo import MongoClient
-
-from bson import ObjectId  # Importar ObjectId desde bson
-
-
-#LOGIN 
-from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, unset_jwt_cookies, jwt_required, JWTManager, decode_token
 from datetime import datetime, timedelta, timezone
 
+# Importaciones de Flask
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 
+# Importaciones de MongoDB
+from pymongo import MongoClient
+from bson import ObjectId
 
+# Importaciones para la autenticación
+from flask_jwt_extended import (
+    create_access_token, get_jwt, get_jwt_identity,
+    unset_jwt_cookies, jwt_required, JWTManager, decode_token
+)
 
+# Inicialización de la aplicación y configuraciones
 app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = "tes2"
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=50)
+jwt = JWTManager(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Lista negra de tokens revocados
 BLACKLIST = set()
+REVOCATION_DATE = datetime.now()
 
-
+# Conexiones a MongoDB
 try:
-    # Conexión a MongoDB
     client = MongoClient('mongodb://127.0.0.1:27117,127.0.0.1:27118')
     db = client['MyDatabase']
     collection = db['Notes']
@@ -30,7 +36,6 @@ except Exception as e:
     print(e)
 
 try:
-    # Nueva conexión a MongoDB del contenedor
     new_client = MongoClient('mongodb://localhost:27017/')
     new_db = new_client['login']
     new_collection = new_db['usuarios']

@@ -116,8 +116,7 @@ docker-compose exec router01 mongosh --port 27017
 sh.enableSharding("MyDatabase")
 
 // Setup shardingKey for collection `MyCollection`**
-sh.shardCollection("MyDatabase.Notes", { usuarioid: 1 });
-
+db.adminCommand( { shardCollection: "MyDatabase.Notes", key: { oemNumber: "hashed", zipCode: 1, supplierId: 1 } } )
 
 ```
 
@@ -175,6 +174,7 @@ sh.status()
 ```bash
 docker exec -it shard-01-node-a bash -c "echo 'rs.status()' | mongosh --port 27017" 
 docker exec -it shard-02-node-a bash -c "echo 'rs.status()' | mongosh --port 27017" 
+docker exec -it shard-03-node-a bash -c "echo 'rs.status()' | mongosh --port 27017" 
 ```
 *Sample Result:*
 ```ps1
