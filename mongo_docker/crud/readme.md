@@ -9,23 +9,30 @@
 
 ## 📖 Table of Contents
 
-- [❓ Mongo Components?](#-mongo-components-)
-- [✨ Steps](#-steps-)
-  - [Step 1: Start all of the containers](#-step-1-start-all-of-the-containers-)
-  - [Step 2: Initialize the replica sets (config servers and shards)](#-step-2-initialize-the-replica-sets-config-servers-and-shards-)
-  - [Step 3: Initializing the router](#-step-3-initializing-the-router-)
-  - [Step 4: Enable sharding and setup sharding-key](#-step-4-enable-sharding-and-setup-sharding-key-)
-- [✅ Verify](#-verify-)
-  - [Verify the status of the sharded cluster](#-verify-the-status-of-the-sharded-cluster-)
-  - [Verify status of replica set for each shard](#-verify-status-of-replica-set-for-each-shard-)
-  - [Check database status](#-check-database-status-)
-- [🔎 More commands](#-more-commands-)
-  - [Normal Startup](#-normal-startup-)
-  - [Resetting the Cluster](#-resetting-the-cluster-)
-  - [Clean up docker-compose](#-clean-up-docker-compose-)
-- [📺 Screenshot](#-screenshot-)
-- [👌 Donate ^^](#-donate--)
-- [📚 Refrences](#-refrences-)
+- [MongoDB (6.0.1) Sharded Cluster with Docker Compose](#mongodb-601-sharded-cluster-with-docker-compose)
+  - [PSS Style (Primary -Secondary - Secondary)](#pss-style-primary--secondary---secondary)
+  - [📖 Table of Contents](#-table-of-contents)
+    - [WARNING (Windows \& OS X)](#warning-windows--os-x)
+    - [Note](#note)
+  - [❓ Mongo Components 🔝](#-mongo-components-)
+  - [✨ Steps 🔝](#-steps-)
+    - [👉 Step 1: Start all of the containers 🔝](#-step-1-start-all-of-the-containers-)
+    - [👉 Step 2: Initialize the replica sets (config servers and shards) 🔝](#-step-2-initialize-the-replica-sets-config-servers-and-shards-)
+    - [👉 Step 3: Initializing the router 🔝](#-step-3-initializing-the-router-)
+    - [👉 Step 4: Enable sharding and setup sharding-key 🔝](#-step-4-enable-sharding-and-setup-sharding-key-)
+    - [✔️ Done](#️-done)
+      - [But before you start inserting data you should verify them first](#but-before-you-start-inserting-data-you-should-verify-them-first)
+  - [📋 Verify 🔝](#-verify-)
+    - [✅ Verify the status of the sharded cluster 🔝](#-verify-the-status-of-the-sharded-cluster-)
+    - [✅ Verify status of replica set for each shard 🔝](#-verify-status-of-replica-set-for-each-shard-)
+    - [✅ Check database status 🔝](#-check-database-status-)
+  - [🔎 More commands 🔝](#-more-commands-)
+    - [✦ Normal Startup 🔝](#-normal-startup-)
+    - [✦ Resetting the Cluster 🔝](#-resetting-the-cluster-)
+    - [✦ Clean up docker-compose 🔝](#-clean-up-docker-compose-)
+  - [📺 Screenshot 🔝](#-screenshot-)
+  - [👌 Donate ^^ 🔝](#-donate--)
+  - [📚 Refrences 🔝](#-refrences-)
 
 ### WARNING (Windows & OS X)
 
@@ -88,7 +95,6 @@ docker-compose exec configsvr01 sh -c "mongosh < /scripts/init-configserver.js"
 
 docker-compose exec shard01-a sh -c "mongosh < /scripts/init-shard01.js"
 docker-compose exec shard02-a sh -c "mongosh < /scripts/init-shard02.js"
-docker-compose exec shard03-a sh -c "mongosh < /scripts/init-shard03.js"
 ```
 
 If you get error like "E QUERY    [thread1] SyntaxError: unterminated string literal @(shellhelp2)", problem maybe due to:
@@ -330,7 +336,7 @@ bye
 docker-compose exec router01 mongosh --port 27017
 use MyDatabase
 db.stats()
-db.MyCollection.getShardDistribution()
+db.Notes.getShardDistribution()
 ```
 
 *Sample Result:*
